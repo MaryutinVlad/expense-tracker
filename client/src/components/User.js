@@ -1,17 +1,19 @@
+import defaultAvatar from "../images/testIcon.png"
 import "../styles/user.scss"
+import daysCounter from "../helpers/daysCounter"
 
 import settings from "../images/options.svg"
 
-export default function User() {
+export default function User({profile}) {
   return (
     <div className="user">
       <img
         className="user__avatar"
-        src=""
+        src={profile.avatar ? profile.avatar : defaultAvatar}
         alt="avatar"
       />
       <p className="user__username">
-        username
+        {profile.name}
       </p>
       <img
         className="user__settings"
@@ -19,7 +21,9 @@ export default function User() {
         alt="settings"
       />
       <p className="user__passed">
-        passed: 12d
+        {
+          daysCounter(profile.createdOn)
+        }
       </p>
     </div>
   )

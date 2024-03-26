@@ -8,9 +8,9 @@ import dateFormater from "../helpers/dateFormater"
 
 import User from "./User"
 
-export default function Header() {
+export default function Header({profile}) {
 
-  const date = dateFormater()
+  const { formatedDate, isNight } = dateFormater()
 
   return (
     <header className="header">
@@ -21,14 +21,16 @@ export default function Header() {
       />
       <div className="header__date">
         <p>
-          {date}
+          {formatedDate}
         </p>
         <img
-          src={day}
+          src={isNight ? night : day}
           alt="is it day or night ?"
         />
       </div>
-      <User/>
+      <User
+        profile={profile}
+      />
     </header>
   )
 }

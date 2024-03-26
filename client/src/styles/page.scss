@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
 
-body {
+.page {
   background-color: hsl(0, 0%, 100%);
   padding: 25px 25px 10px;
+  box-sizing: border-box;
+  margin: 0;
   font-family: 'B612 Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.login {
+  justify-content: center;
+  align-items: center;
 }

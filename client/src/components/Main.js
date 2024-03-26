@@ -1,4 +1,4 @@
-export default function Content() {
+export default function Content({expenses}) {
   return (
     <div>
       Content

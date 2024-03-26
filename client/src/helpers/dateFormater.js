@@ -1,6 +1,7 @@
 export default function formatDate() {
   const date = new Date(Date.now())
-  const arrayDate = String(date).split(" ").slice(0, 3)
+  const arrayDate = String(date).split(" ").slice(0, 5)
+  const isNight = date.getHours() < 6 || date.getHours() > 21
 
   let weekday = arrayDate[0]
   let dayOfMonth = arrayDate[2]
@@ -34,5 +35,8 @@ export default function formatDate() {
     dayOfMonth = dayOfMonth.concat("th")
   }
 
-  return `${weekday} ${dayOfMonth}`
+  return {
+    formatedDate: `${weekday} ${dayOfMonth}`,
+    isNight
+  }
 }
