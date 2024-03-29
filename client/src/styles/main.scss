@@ -1,0 +1,29 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: auto;
+}
+
+.main__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding: 2px 0;
+  border-bottom: 1px solid black;
+}
+
+.main__buttons button {
+  background-color: transparent;
+  border: none;
+  font-size: 19px;
+  font-family: 'B612 Mono', monospace;
+  cursor: pointer;
+  padding: 10px 30px;
+}
+
+.main__buttons button:hover {
+  color: hsla(0, 0%, 30%, .8);
+}

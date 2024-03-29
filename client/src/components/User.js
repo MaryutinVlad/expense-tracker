@@ -1,8 +1,8 @@
-import defaultAvatar from "../images/testIcon.png"
 import "../styles/user.scss"
 import daysCounter from "../helpers/daysCounter"
 
 import settings from "../images/options.svg"
+import defaultAvatar from "../images/defaultAvatar.png"
 
 export default function User({profile}) {
   return (

@@ -1,17 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
 
+* {
+  margin: 0;
+}
+
 .page {
   background-color: hsl(0, 0%, 100%);
   padding: 25px 25px 10px;
   box-sizing: border-box;
-  margin: 0;
   font-family: 'B612 Mono', monospace;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100vh;
 }
 
-.login {
+.page__login {
+  justify-content: center;
+  align-items: center;
+}
+
+.page__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: hsla(0, 0%, 100%, .65);
+  display: flex;
   justify-content: center;
   align-items: center;
 }
