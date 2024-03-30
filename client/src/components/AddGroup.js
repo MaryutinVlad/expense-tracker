@@ -7,7 +7,7 @@ export default function AddGroup({
 
   const groupValues = {
     groupName: '',
-    groupFlag: ''
+    groupFlag: '#000000'
   }
 
   const addGroup = (e) => {

@@ -27,3 +27,8 @@
 .main__buttons button:hover {
   color: hsla(0, 0%, 30%, .8);
 }
+
+.main__expenses {
+  display: flex;
+  flex-direction: row;
+}
