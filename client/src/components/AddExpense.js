@@ -13,6 +13,8 @@ export default function AddGroup({
 
   const addExpense = (e) => {
     e.preventDefault()
+    expenseValues.expenseValue = Number(expenseValues.expenseValue)
+    console.log(typeof expenseValues.expenseValue)
     onAddExpense(expenseValues)
   }
 
