@@ -29,6 +29,7 @@
 }
 
 .main__expenses {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  
 }

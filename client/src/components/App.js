@@ -87,31 +87,7 @@ function App() {
     setLoggedIn(true)
   }
 
-  //console.log(fakeDataGenerator(user, 5, 4))
-  user.expenses.unshift({
-    date: "2/2024",
-    entries: [
-      {
-        createdOn: "2/10/2024",
-        expenseGroup: "groceries",
-        expenseValue: 678
-      },
-      {
-        createdOn: "2/15/2024",
-        expenseGroup: "harmful",
-        expenseValue: 1678
-      },
-      {
-        createdOn: "2/19/2024",
-        expenseGroup: "medicine",
-        expenseValue: 3678
-      },
-    ]
-  })
-  user.expenses[user.expenses.length - 1].entries.push({
-    
-  })
-  console.log(user)
+  console.log(user.expenses)
 
   return (
     <div className={'page' + (loggedIn ? '' : ' page__login') }>

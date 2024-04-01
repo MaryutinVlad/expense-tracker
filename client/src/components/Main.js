@@ -35,7 +35,8 @@ export default function Content({
       for (group of groups) {
         expensesToShow.push({
           groupName: group.groupName,
-          groupvalue: 0
+          groupvalue: 0,
+          groupFlag: group.groupFlag
         })
       }
 
@@ -50,17 +51,25 @@ export default function Content({
           subResult[expense.expenseGroup] += expense.expenseValue
         }
       }
+    } else if (filter === "week") {
+      const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
+
     }
+    const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
+    console.log(lastEntryDate.getDay())
 
     for (let group of groups) {
       expensesToShow.push({
         groupName: group.groupName,
-        groupvalue: subResult[group.groupName] ? subResult[group.groupName] : 0
+        groupvalue: subResult[group.groupName] ? subResult[group.groupName] : 0,
+        groupFlag: group.groupFlag
       })
     }
-    
+
     return expensesToShow
   }
+
+  console.log()
 
   return (
     <div className="main">
@@ -95,12 +104,11 @@ export default function Content({
             </select>
           </h4>
           {
-            //console.log(showExpenses(expensesFilter))
-            /*showExpenses().map(group => (
+            showExpenses(expensesFilter).map(group => (
               <div key={group.groupName}>
-                {group.groupName} {group.groupvalue}
+                <span style={{ color: `${group.groupFlag}`}}>{group.groupName}</span> {group.groupvalue}
               </div>
-            ))*/
+            ))
           }
         </div>
         <div>
