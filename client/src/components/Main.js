@@ -53,10 +53,16 @@ export default function Content({
       }
     } else if (filter === "week") {
       const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
+      
+      /*for ( let daysToMonday = lastEntryDate.getDay(); daysToMonday > 0; daysToMonday-- ) {
 
+      }*/
     }
     const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
-    console.log(lastEntryDate.getDay())
+    const daysToMonday = lastEntryDate.getDate()
+    const dayInMilliseconds = 86400000
+    const dateOfMonday = new Date(Math.round(lastEntryDate - (daysToMonday * dayInMilliseconds)))
+    console.log(dateOfMonday.toLocaleDateString())
 
     for (let group of groups) {
       expensesToShow.push({
