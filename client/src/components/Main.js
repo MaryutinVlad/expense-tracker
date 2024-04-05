@@ -52,17 +52,20 @@ export default function Content({
         }
       }
     } else if (filter === "week") {
-      const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
       
-      /*for ( let daysToMonday = lastEntryDate.getDay(); daysToMonday > 0; daysToMonday-- ) {
-
-      }*/
+      const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
+      const daysToMonday = lastEntryDate.getDay()
+      const dayInMilliseconds = 86400000
+      const dateOfSunday = new Date(Math.round(lastEntryDate - (daysToMonday * dayInMilliseconds)))
+      for (let expenseIndex = currentMonthExpenses.entries.length - 1; expenseIndex > 0; expenseIndex--) {
+        const currentExpenseDate = new Date(currentMonthExpenses.entries[expenseIndex].createdOn)
+        if (currentExpenseDate > dateOfSunday) {
+          subResult[currentMonthExpenses.entries[expenseIndex].expenseGroup] = currentMonthExpenses.entries[expenseIndex].expenseValue
+        } else {
+          break
+        }
+      }
     }
-    const lastEntryDate = new Date(currentMonthExpenses.entries[currentMonthExpenses.entries.length - 1].createdOn)
-    const daysToMonday = lastEntryDate.getDate()
-    const dayInMilliseconds = 86400000
-    const dateOfMonday = new Date(Math.round(lastEntryDate - (daysToMonday * dayInMilliseconds)))
-    console.log(dateOfMonday.toLocaleDateString())
 
     for (let group of groups) {
       expensesToShow.push({
