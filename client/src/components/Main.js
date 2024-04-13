@@ -24,32 +24,40 @@ export default function Content({
     setExpensesFilter(e.target.value)
   }
 
+  const groupFlags = {}
+
+  groups.map(group => groupFlags[group.groupName] = group.groupFlag)
+
   const showExpenses = (filter) => {
 
-    const expensesToShow = []
+    const expensesSummary = []
+    const expensesHistory = []
     const currentMonthExpenses = expenses[expenses.length - 1]
     const subResult = {}
     let group
 
     if (currentMonthExpenses.date !== dateKey) {
       for (group of groups) {
-        expensesToShow.push({
+        expensesSummary.push({
           groupName: group.groupName,
-          groupvalue: 0,
-          groupFlag: group.groupFlag
+          groupvalue: 0
         })
       }
 
-      return expensesToShow
+      return expensesSummary
 
     } else if (filter === "month") {
 
-      for (let expense of currentMonthExpenses.entries) {
-        if (!subResult[expense.expenseGroup]) {
-          subResult[expense.expenseGroup] = expense.expenseValue
+      for (let expenseIndex = currentMonthExpenses.entries.length - 1; expenseIndex >= 0; expenseIndex--) {
+        const currentExpense = currentMonthExpenses.entries[expenseIndex]
+
+        if (!subResult[currentExpense.expenseGroup]) {
+          subResult[currentExpense.expenseGroup] = currentExpense.expenseValue
         } else {
-          subResult[expense.expenseGroup] += expense.expenseValue
+          subResult[currentExpense.expenseGroup] += currentExpense.expenseValue
         }
+
+        expensesHistory.push(currentExpense)
       }
     } else if (filter === "week") {
       
@@ -57,10 +65,54 @@ export default function Content({
       const daysToMonday = lastEntryDate.getDay()
       const dayInMilliseconds = 86400000
       const dateOfSunday = new Date(Math.round(lastEntryDate - (daysToMonday * dayInMilliseconds)))
-      for (let expenseIndex = currentMonthExpenses.entries.length - 1; expenseIndex > 0; expenseIndex--) {
-        const currentExpenseDate = new Date(currentMonthExpenses.entries[expenseIndex].createdOn)
+      
+      for (let expenseIndex = currentMonthExpenses.entries.length - 1; expenseIndex >= 0; expenseIndex--) {
+        const currentExpense = currentMonthExpenses.entries[expenseIndex]
+        const currentExpenseDate = new Date(currentExpense.createdOn)
+
         if (currentExpenseDate > dateOfSunday) {
-          subResult[currentMonthExpenses.entries[expenseIndex].expenseGroup] = currentMonthExpenses.entries[expenseIndex].expenseValue
+          if (!subResult[currentExpense.expenseGroup]) {
+            subResult[currentExpense.expenseGroup] = currentExpense.expenseValue
+          } else {
+            subResult[currentExpense.expenseGroup] += currentExpense.expenseValue
+          }
+          expensesHistory.push(currentExpense)
+
+          if (expenseIndex === 0) {
+            const previousMonthExpenses = expenses[expenses.length - 2]
+
+            for (let extraIndex = previousMonthExpenses.entries.length - 1; extraIndex >= 0; extraIndex--) {
+              const prevMonthExpense = previousMonthExpenses.entries[extraIndex]
+
+              if (currentExpenseDate > dateOfSunday) {
+                if (!subResult[prevMonthExpense.expenseGroup]) {
+                  subResult[prevMonthExpense.expenseGroup] = prevMonthExpense.expenseValue
+                } else {
+                  subResult[prevMonthExpense.expenseGroup] += prevMonthExpense.expenseValue
+                }
+                expensesHistory.push(prevMonthExpense)
+              } else {
+                break
+              }
+            }
+          }
+        } else {
+          break
+        }
+      }
+    } else {
+      const today = new Date()
+
+      for (let expenseIndex = currentMonthExpenses.entries.length - 1; expenseIndex >= 0; expenseIndex--) {
+        const currentExpense = currentMonthExpenses.entries[expenseIndex]
+
+        if (currentExpense.createdOn === today.toLocaleDateString()) {
+          if (!subResult[currentExpense.expenseGroup]) {
+            subResult[currentExpense.expenseGroup] = currentExpense.expenseValue
+          } else {
+            subResult[currentExpense.expenseGroup] += currentExpense.expenseValue
+          }
+          expensesHistory.push(currentExpense)
         } else {
           break
         }
@@ -68,17 +120,16 @@ export default function Content({
     }
 
     for (let group of groups) {
-      expensesToShow.push({
+      expensesSummary.push({
         groupName: group.groupName,
         groupvalue: subResult[group.groupName] ? subResult[group.groupName] : 0,
-        groupFlag: group.groupFlag
       })
     }
 
-    return expensesToShow
+    return { expensesSummary, expensesHistory }
   }
 
-  console.log()
+  const { expensesSummary, expensesHistory } = showExpenses(expensesFilter)
 
   return (
     <div className="main">
@@ -113,9 +164,9 @@ export default function Content({
             </select>
           </h4>
           {
-            showExpenses(expensesFilter).map(group => (
+            expensesSummary.map(group => (
               <div key={group.groupName}>
-                <span style={{ color: `${group.groupFlag}`}}>{group.groupName}</span> {group.groupvalue}
+                <span style={{ color: `${groupFlags[group.groupName]}`}}>{group.groupName}</span> {group.groupvalue}
               </div>
             ))
           }
@@ -125,7 +176,13 @@ export default function Content({
             History
           </h4>
           <div>
-
+            {
+              expensesHistory.map(entry => (
+                <p key={entry.createdOn + entry.expenseValue}>
+                  {entry.expenseValue} in <span style={{color: `${groupFlags[entry.expenseGroup]}`}}>{entry.expenseGroup}</span> on {entry.createdOn}
+                </p>
+              ))
+            }
           </div>
         </div>
       </div>
