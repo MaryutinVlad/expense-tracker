@@ -1,0 +1,21 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@mixin flex-col($gap: 20px) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+@mixin background($alpha: 1) {
+  background-color: hsla(0, 0%, 100%, $alpha);
+}

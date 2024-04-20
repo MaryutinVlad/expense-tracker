@@ -86,7 +86,6 @@ function App() {
 
     setLoggedIn(true)
   }
-  console.log(user.expenses)
 
   return (
     <div className={'page' + (loggedIn ? '' : ' page__login') }>

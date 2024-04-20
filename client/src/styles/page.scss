@@ -1,3 +1,4 @@
+@use "./rules.scss" as pages;
 @import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
 
 * {
@@ -5,7 +6,7 @@
 }
 
 .page {
-  background-color: hsl(0, 0%, 100%);
+  @include pages.background;
   padding: 25px 25px 10px;
   box-sizing: border-box;
   font-family: 'B612 Mono', monospace;
@@ -26,7 +27,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: hsla(0, 0%, 100%, .65);
+  @include pages.background(.65);
   display: flex;
   justify-content: center;
   align-items: center;

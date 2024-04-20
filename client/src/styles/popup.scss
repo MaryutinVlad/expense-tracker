@@ -1,35 +1,28 @@
+@use "./rules.scss" as forms;
+
 .popup {
-  display: flex;
-  flex-direction: column;
+  @include forms.flex-col;
   border: 1px solid black;
   border-radius: 7px;
   box-sizing: border-box;
   padding: 15px 25px 20px;
-  gap: 20px;
+  background-color: hsl(0, 0%, 100%);
 }
 
 .popup__upper-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include forms.flex-row;
 }
 
 .popup__upper-section button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  @include forms.button;
 }
 
 .popup form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include forms.flex-col;
 }
 
 .popup__input-field {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include forms.flex-row;
   gap: 15px;
 }
 
@@ -39,7 +32,6 @@
   outline: none;
   font-family: 'B612 Mono', monospace;
   letter-spacing: 1.5px;
-  
 }
 
 .popup__input-field:first-of-type input {
@@ -48,10 +40,8 @@
 }
 
 .popup__input-field button {
-  border: none;
+  @include forms.button;
   font-size: 16px;
-  background-color: transparent;
-  cursor: pointer;
   font-family: 'B612 Mono', monospace;
 }
 
