@@ -1,32 +1,28 @@
+@use "./rules.scss" as headers;
+
 .header {
-  display: grid;
+  @include headers.flex(column, center, space-between, 20px);
   padding: 0 40px 20px 25px;
-  grid-template-columns: 5fr 1.5fr;
-  grid-template-rows: auto;
-  grid-template-areas: 
-    "logo user"
-    "date user";
   border-bottom: 1px solid black;
 }
 
 .header__logo {
-  grid-area: logo;
+  margin: auto
+}
+
+.header__lower-section {
+  @include headers.flex(row, space-between, center, 30px)
 }
 
 .header__date {
-  grid-area: date;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-  margin: 15px auto 0 25px;
+  @include headers.flex(row, space-around, center, 30px);
 }
 
 .header__date p {
-  font-size: 26px;
+  font-size: 28px;
   margin: 0;
 }
 
 .header__date img {
-  margin-bottom: 10px;
+  @include headers.image()
 }

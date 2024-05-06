@@ -76,7 +76,6 @@ export default function Content({
           <h4>
             History
           </h4>
-          <div>
             {
               expensesHistory.map(entry => (
                 <p key={entry.createdOn + entry.expenseValue}>
@@ -91,7 +90,6 @@ export default function Content({
                 </p>
               ))
             }
-          </div>
         </div>
       </div>
     </div>

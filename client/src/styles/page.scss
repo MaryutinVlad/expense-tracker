@@ -7,9 +7,9 @@
 
 .page {
   @include pages.background;
+  @include pages.font;
   padding: 25px 25px 10px;
   box-sizing: border-box;
-  font-family: 'B612 Mono', monospace;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

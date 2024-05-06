@@ -1,44 +1,49 @@
+@use "./rules.scss" as users;
+@keyframes rotate {
+  from {
+    transform: rotate(0)
+  }
+  to {
+    transform: rotate(180deg)
+  }
+}
+
+$transduration: .3s;
+
 .user {
-  grid-area: user;
-  height: 80px;
-  display: grid;
-  align-self: center;
-  font-size: 24px;
-  grid-template-columns: 2fr auto auto;
-  grid-template-rows: repeat(2, .5fr);
-  gap: 10px 20px;
-  grid-template-areas: 
-    "avatar username settings"
-    "avatar passed passed";
+  @include users.flex(row, center, center, 20px);
+  font-size: 28px;
 }
 
 .user__avatar {
-  grid-area: avatar;
-  justify-self: end;
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 12px;
+  @include users.image();
 }
 
 .user__username {
-  grid-area: username;
   margin: 0;
 }
 
 .user__settings {
   cursor: pointer;
-  grid-area: settings;
-  transition: transform .5s ease-in-out;
+  transition: opacity $transduration ease-in-out;
 }
 
 .user__settings:hover {
-  transform: scale(110%);
-  transition: transform .5s ease-in-out;
+  opacity: .7;
+  transition: opacity $transduration ease-in-out;
 }
 
-.user__passed {
-  grid-area: passed;
-  margin: 0 10px 0 0;
+.user__info {
+  @include users.flex(row, center, center, 20px);
+  opacity: 1;
+  transition: opacity $transduration ease-in-out;
+}
+
+.user__info_hidden {
+  opacity: 0;
+  transition: opacity $transduration ease-in-out;
+}
+
+.user__settings_clicked {
+  animation: rotate $transduration ease-in-out forwards;
 }

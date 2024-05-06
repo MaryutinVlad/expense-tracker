@@ -1,13 +1,12 @@
+@use "./rules.scss" as auths;
+
 .container {
+  @include auths.flex(column, center, center, 0);
   width: 50%;
   margin: auto;
   border: 2px solid gray;
   border-radius: 15px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 20px;
 }
 
@@ -23,35 +22,26 @@
 }
 
 .container__form {
+  @include auths.flex(row, flex-end, flex-start, 0);
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
   height: 2rem;
 }
 
 .container__form input {
+  @include auths.input();
+  @include auths.font();
   min-width: 40%;
-  font-family: 'B612 Mono', monospace;
   padding-left: 10px;
   box-sizing: border-box;
-  border: none;
   border-bottom: 2px solid gray;
   background-color: aliceblue;
-  outline: none;
-  letter-spacing: 1.5px;
 }
 
 .container__form button {
+  @include auths.font();
+  @include auths.button();
   min-width: 20%;
-  font-family: 'B612 Mono', monospace;
   font-weight: 600;
-  border: none;
   border-bottom: 2px solid gray;
   border-left: 2px solid gray;
-  cursor: pointer;
-}
-
-.container__form button:hover {
-  color: rgba(0, 0, 0, .7);
 }

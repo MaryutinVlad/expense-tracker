@@ -14,7 +14,7 @@ export default function showExpenses(filter, expenses, groups, dateKey) {
       })
     }
 
-    return expensesSummary
+    return { expensesSummary, expensesHistory }
 
   } else if (filter === "month") {
 

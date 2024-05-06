@@ -19,18 +19,20 @@ export default function Header({profile}) {
         src={logo}
         alt="expense tracker"
       />
-      <div className="header__date">
-        <p>
-          {formatedDate}
-        </p>
-        <img
-          src={isNight ? night : day}
-          alt="is it day or night ?"
+      <div className="header__lower-section">
+        <div className="header__date">
+          <p>
+            {formatedDate}
+          </p>
+          <img
+            src={isNight ? night : day}
+            alt="is it day or night ?"
+          />
+        </div>
+        <User
+          profile={profile}
         />
       </div>
-      <User
-        profile={profile}
-      />
     </header>
   )
 }

@@ -1,16 +1,16 @@
 @use "./rules.scss" as forms;
 
 .popup {
-  @include forms.flex-col;
+  @include forms.flex(column, flex-start, space-between, 20px);
+  @include forms.background;
   border: 1px solid black;
   border-radius: 7px;
   box-sizing: border-box;
   padding: 15px 25px 20px;
-  background-color: hsl(0, 0%, 100%);
 }
 
 .popup__upper-section {
-  @include forms.flex-row;
+  @include forms.flex;
 }
 
 .popup__upper-section button {
@@ -18,20 +18,16 @@
 }
 
 .popup form {
-  @include forms.flex-col;
+  @include forms.flex(column, flex-start, space-between, 20px);
 }
 
 .popup__input-field {
-  @include forms.flex-row;
-  gap: 15px;
+  @include forms.flex(row, space-between, flex-start, 15);
 }
 
 .popup__input-field input {
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-family: 'B612 Mono', monospace;
-  letter-spacing: 1.5px;
+  @include forms.input;
+  @include forms.font;
 }
 
 .popup__input-field:first-of-type input {
@@ -41,10 +37,5 @@
 
 .popup__input-field button {
   @include forms.button;
-  font-size: 16px;
-  font-family: 'B612 Mono', monospace;
-}
-
-.popup__input-field button:hover {
-  color: hsla(0, 0%, 30%, .8);
+  @include forms.font;
 }

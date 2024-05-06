@@ -1,35 +1,27 @@
+@use "./rules.scss" as mains;
+
 .main {
-  display: flex;
-  flex-direction: column;
+  @include mains.flex(column, flex-start, space-between, 0);
   width: 100%;
   margin-bottom: auto;
 }
 
 .main__buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 50px;
-  justify-content: space-around;
+  @include mains.flex(row, space-around, flex-start, 50px);
   box-sizing: border-box;
   padding: 2px 0;
   border-bottom: 1px solid black;
 }
 
 .main__buttons button {
-  background-color: transparent;
-  border: none;
-  font-size: 19px;
-  font-family: 'B612 Mono', monospace;
-  cursor: pointer;
+  @include mains.button();
+  @include mains.font(19px);
   padding: 10px 30px;
-}
-
-.main__buttons button:hover {
-  color: hsla(0, 0%, 30%, .8);
 }
 
 .main__expenses {
   display: grid;
   grid-template-columns: repeat(2, 50%);
-  
+  justify-content: center;
+  justify-items: center;
 }
