@@ -22,7 +22,7 @@ export default function AddGroup({
   }
 
   const closePopup = () => {
-    onClosePopup()
+    onClosePopup("addExpense")
   }
 
   return (

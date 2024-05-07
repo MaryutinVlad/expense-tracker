@@ -9,6 +9,16 @@
   padding: 15px 25px 20px;
 }
 
+.popup__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  @include forms.background(.65);
+  @include forms.flex(row, center, center, 0);
+}
+
 .popup__upper-section {
   @include forms.flex;
 }
@@ -38,4 +48,9 @@
 .popup__input-field button {
   @include forms.button;
   @include forms.font;
+}
+
+.popup_hidden {
+  opacity: 0;
+  z-index: -1;
 }

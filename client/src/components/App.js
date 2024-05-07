@@ -1,8 +1,6 @@
 import '../styles/page.scss';
 import { useState, useEffect } from "react"
 
-import fakeDataGenerator from '../helpers/fakeDataGenerator';
-
 import Header from "./Header"
 import Main from "./Main"
 import Footer from "./Footer"
@@ -12,30 +10,36 @@ import AddExpense from "./AddExpense"
 
 function App() {
 
-  let user = JSON.parse(localStorage.getItem("expense-tracker"))
-
-  const [ loggedIn, setLoggedIn ] = useState(Boolean(user))
-  const [ isGroupPopupOpened, setIsGroupPopupOpened ] = useState(false)
-  const [ isExpensePopupOpened, setIsExpensePopupOpened ] = useState(false)
+  const savedProfile = JSON.parse(localStorage.getItem("expense-tracker"))
+  const [ loggedIn, setLoggedIn ] = useState(Boolean(savedProfile))
+  const [ user, setUser ] = useState(loggedIn ? savedProfile : null)
 
   const date = new Date()
   const dateKey = String(date.getMonth() + 1) + "/" + String(date.getFullYear())
 
-  const toggleGroupPopup = () => {
-    setIsGroupPopupOpened(!isGroupPopupOpened)
-  }
-
-  const toggleExpensePopup = () => {
-    setIsExpensePopupOpened(!isExpensePopupOpened)
+  const togglePopup = (id) => {
+    document.querySelector(`#${id}`).classList.toggle("popup_hidden")
   }
 
   const addGroup = (groupValues) => {
 
     groupValues.createdOn = date.toLocaleDateString()
-    user.profile.groups.push(groupValues)
-    localStorage.setItem("expense-tracker", JSON.stringify(user))
+    const updatedUser = {
+      profile: {
+        ...user.profile,
+        groups: [
+          ...user.profile.groups,
+          groupValues
+        ]
+      },
+      expenses: user.expenses
+    }
+    //user.profile.groups.push(groupValues)
+    //localStorage.setItem("expense-tracker", JSON.stringify(user))
+    setUser(updatedUser)
+    console.log(updatedUser)
 
-    toggleGroupPopup()
+    togglePopup("addGroup")
   }
 
   const addExpense = (expenseValues) => {
@@ -43,7 +47,7 @@ function App() {
     expenseValues.createdOn = date.toLocaleDateString()
     
     if (user.expenses[user.expenses.length - 1].date === dateKey) {
-      user.expenses[user.expenses.length - 1].entries.push(expenseValues)
+      user.expenses[user.expenses.length - 1].entries.push(expenseValues)      
     } else {
       user.expenses.push({
         date: dateKey,
@@ -53,15 +57,15 @@ function App() {
       })
     }
 
-    localStorage.setItem("expense-tracker", JSON.stringify(user))
+    //localStorage.setItem("expense-tracker", JSON.stringify(user))
+    setUser(user)
 
-    toggleExpensePopup()
+    togglePopup("addExpense")
   }
 
-  const closeOnOverlayClick = (e) => {
+  const closeOnOverlayClick = (e, id) => {
     if (e.target === e.currentTarget) {
-      setIsGroupPopupOpened(false)
-      setIsExpensePopupOpened(false)
+      togglePopup(id)
     }
   }
 
@@ -83,6 +87,7 @@ function App() {
     }
 
     localStorage.setItem("expense-tracker", JSON.stringify(newUser))
+    setUser(newUser)
 
     setLoggedIn(true)
   }
@@ -99,43 +104,35 @@ function App() {
               dateKey={dateKey}
               expenses={user.expenses}
               groups={user.profile.groups}
-              onAddGroup={toggleGroupPopup}
-              onAddExpense={toggleExpensePopup}
+              onOpenPopup={togglePopup}
             />
             <Footer />
-            
+            <div
+              className='popup__overlay popup_hidden'
+              id='addGroup'
+              onClick={(e) => closeOnOverlayClick(e, "addGroup")}
+            >
+              <AddGroup
+                onAddGroup={addGroup}
+                onClosePopup={togglePopup}
+              />
+            </div>
+            <div
+              className='popup__overlay popup_hidden'
+              id='addExpense'
+              onClick={(e) => closeOnOverlayClick(e, "addExpense")}
+            >
+              <AddExpense
+                groups={user.profile.groups}
+                onAddExpense={addExpense}
+                onClosePopup={togglePopup}
+              />
+            </div>
           </>
         ) : (
           <Auth
             onSignUp={signUp}
           />
-        )
-      }
-      {
-        isGroupPopupOpened && (
-          <div
-            className='page__overlay'
-            onClick={closeOnOverlayClick}
-          >
-            <AddGroup
-              onAddGroup={addGroup}
-              onClosePopup={toggleGroupPopup}
-            />
-          </div>
-        )
-      }
-      {
-        isExpensePopupOpened && (
-          <div
-            className='page__overlay'
-            onClick={closeOnOverlayClick}
-          >
-            <AddExpense
-              groups={user.profile.groups}
-              onAddExpense={addExpense}
-              onClosePopup={toggleExpensePopup}
-            />
-          </div>
         )
       }
     </div>

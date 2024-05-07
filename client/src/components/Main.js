@@ -1,5 +1,6 @@
 import "../styles/main.scss"
 import showExpenses from "../helpers/showExpenses"
+import runningNumbers from "../helpers/runningNumbers"
 import historyDateFormater from "../helpers/historyDateFormater"
 
 import { useState } from "react"
@@ -8,18 +9,13 @@ export default function Content({
   dateKey,
   expenses,
   groups,
-  onAddGroup,
-  onAddExpense
+  onOpenPopup
 }) {
 
   const [ expensesFilter, setExpensesFilter ] = useState("month")
 
-  const addGroup = () => {
-    onAddGroup()
-  }
-
-  const addExpense = () => {
-    onAddExpense()
+  const openPopup = (id) => {
+    onOpenPopup(id)
   }
 
   const changeFilter = (e) => {
@@ -37,13 +33,13 @@ export default function Content({
       <div className="main__buttons">
         <button
           type="button"
-          onClick={addGroup}
+          onClick={() => openPopup("addGroup")}
         >
           Add group
         </button>
         <button
           type="button"
-          onClick={addExpense}
+          onClick={() => openPopup("addExpense")}
         >
           Add expense
         </button>
@@ -65,9 +61,10 @@ export default function Content({
             </select>
           </h4>
           {
-            expensesSummary.map(group => (
-              <div key={group.groupName}>
-                <span style={{ color: `${groupFlags[group.groupName]}`}}>{group.groupName}</span> {group.groupvalue}
+            expensesSummary.map(({ groupName, groupValue }) => (
+              <div key={groupName}>
+                <span style={{ color: `${groupFlags[groupName]}`}}>{groupName} </span>
+                <span id={groupName}>{runningNumbers(groupValue, groupName, 50, 10)}</span>
               </div>
             ))
           }
@@ -77,13 +74,13 @@ export default function Content({
             History
           </h4>
             {
-              expensesHistory.map(entry => (
-                <p key={entry.createdOn + entry.expenseValue}>
-                  {entry.expenseValue} in <span style={{color: `${groupFlags[entry.expenseGroup]}`}}>{entry.expenseGroup} </span>
+              expensesHistory.map(({ expenseGroup, expenseValue, createdOn }) => (
+                <p key={createdOn + expenseValue}>
+                  {expenseValue} in <span style={{color: `${groupFlags[expenseGroup]}`}}>{expenseGroup} </span>
                   {
                     expensesFilter !== "day" && (
                       <>
-                        {historyDateFormater(entry.createdOn)}
+                        {historyDateFormater(createdOn)}
                       </>
                     )
                   }

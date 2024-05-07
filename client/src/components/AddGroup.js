@@ -20,7 +20,7 @@ export default function AddGroup({
   }
 
   const closePopup = () => {
-    onClosePopup()
+    onClosePopup("addGroup")
   }
 
   return (

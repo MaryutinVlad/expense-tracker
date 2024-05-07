@@ -20,15 +20,3 @@
   justify-content: center;
   align-items: center;
 }
-
-.page__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  @include pages.background(.65);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

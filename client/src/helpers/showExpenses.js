@@ -10,7 +10,7 @@ export default function showExpenses(filter, expenses, groups, dateKey) {
     for (group of groups) {
       expensesSummary.push({
         groupName: group.groupName,
-        groupvalue: 0
+        groupValue: 0
       })
     }
 
@@ -92,7 +92,7 @@ export default function showExpenses(filter, expenses, groups, dateKey) {
   for (let group of groups) {
     expensesSummary.push({
       groupName: group.groupName,
-      groupvalue: subResult[group.groupName] ? subResult[group.groupName] : 0,
+      groupValue: subResult[group.groupName] ? subResult[group.groupName] : 0,
     })
   }
 
