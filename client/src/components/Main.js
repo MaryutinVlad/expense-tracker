@@ -27,6 +27,7 @@ export default function Content({
   groups.map(group => groupFlags[group.groupName] = group.groupFlag)
 
   const { expensesSummary, expensesHistory } = showExpenses(expensesFilter, expenses, groups, dateKey)
+  const expensesTotal = expensesSummary.reduce(((accum, cur) => accum + cur.groupValue), 0)
 
   return (
     <div className="main">
@@ -44,8 +45,8 @@ export default function Content({
           Add expense
         </button>
       </div>
-      <div className="main__expenses">
-        <div>
+      <div className="main__content">
+        <div className="main__expenses">
           <h4>
             Expenses this
             <select onChange={changeFilter}>
@@ -65,17 +66,22 @@ export default function Content({
               <div key={groupName}>
                 <span style={{ color: `${groupFlags[groupName]}`}}>{groupName} </span>
                 <span id={groupName}>{runningNumbers(groupValue, groupName, 50, 10)}</span>
+                <span id={`${groupName}-perc`}>{runningNumbers((groupValue / expensesTotal).toFixed(3) * 100, `${groupName}-perc`, 50, 10)}</span>
               </div>
             ))
           }
+          <div key="total">
+                <span style={{ color: "#ff0000"}}>total </span>
+                <span id="total">{runningNumbers(expensesTotal, "total", 50, 10)}</span>
+              </div>
         </div>
-        <div>
+        <div className="main__history">
           <h4>
             History
           </h4>
             {
               expensesHistory.map(({ expenseGroup, expenseValue, createdOn }) => (
-                <p key={createdOn + expenseValue}>
+                <p key={createdOn + expenseValue + Math.floor(Math.random() * 100)}>
                   {expenseValue} in <span style={{color: `${groupFlags[expenseGroup]}`}}>{expenseGroup} </span>
                   {
                     expensesFilter !== "day" && (

@@ -19,9 +19,10 @@
   padding: 10px 30px;
 }
 
-.main__expenses {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  justify-content: center;
-  justify-items: center;
+.main__content {
+  @include mains.flex(row, space-around, flex-start, 0);
+}
+
+.main__expenses div {
+  @include mains.flex(row, space-between, flex-start, 10px);
 }

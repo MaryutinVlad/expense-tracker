@@ -4,9 +4,11 @@ export default function runningNumbers(value, groupName, duration, interval) {
   let divider = Math.floor(value / duration)
 
   let timer = setInterval(() => {
+
     if (initialValue >= value) {
       clearInterval(timer)
-    } else if ((initialValue + divider) > value) {
+      document.querySelector(`#${groupName}`).textContent = value
+    } else if ((initialValue + divider) > value || divider === 0) {
       initialValue += 1
       document.querySelector(`#${groupName}`).textContent = initialValue
     } else {

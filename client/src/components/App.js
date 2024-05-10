@@ -1,5 +1,5 @@
 import '../styles/page.scss';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import Header from "./Header"
 import Main from "./Main"
@@ -24,6 +24,7 @@ function App() {
   const addGroup = (groupValues) => {
 
     groupValues.createdOn = date.toLocaleDateString()
+    
     const updatedUser = {
       profile: {
         ...user.profile,
@@ -34,31 +35,42 @@ function App() {
       },
       expenses: user.expenses
     }
-    //user.profile.groups.push(groupValues)
-    //localStorage.setItem("expense-tracker", JSON.stringify(user))
+
+    localStorage.setItem("expense-tracker", JSON.stringify(user))
     setUser(updatedUser)
-    console.log(updatedUser)
 
     togglePopup("addGroup")
   }
 
   const addExpense = (expenseValues) => {
 
+    const updatedUser = {
+      profile: user.profile
+    }
     expenseValues.createdOn = date.toLocaleDateString()
     
     if (user.expenses[user.expenses.length - 1].date === dateKey) {
-      user.expenses[user.expenses.length - 1].entries.push(expenseValues)      
+
+      const updatedExpenses = user.expenses
+
+      updatedExpenses[updatedExpenses.length - 1].entries.push(expenseValues)
+
+      updatedUser.expenses = updatedExpenses
+
     } else {
-      user.expenses.push({
-        date: dateKey,
-        entries: [
-          expenseValues
-        ]
-      })
+      updatedUser.expenses = [
+        ...user.expenses,
+        {
+          date: dateKey,
+          entries: [
+            expenseValues
+          ]
+        }
+      ]
     }
 
-    //localStorage.setItem("expense-tracker", JSON.stringify(user))
-    setUser(user)
+    localStorage.setItem("expense-tracker", JSON.stringify(user))
+    setUser(updatedUser)
 
     togglePopup("addExpense")
   }
